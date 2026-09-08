@@ -26,7 +26,7 @@ def boundary_l(x, on_boundary):
 def boundary_r(x, on_boundary):
     return on_boundary and dde.utils.isclose(x[0], 1)
 
-# Sınır koşulları: Serbest uçta M=0 ve V=0
+# Boundary conditions: Free end M=0 and V=0
 def bc_moment_free(x, y, _):
     return dde.grad.jacobian(y, x, i=1, j=0)
 
@@ -71,7 +71,7 @@ loss_weights = [1.0, 1.0, 10.0, 10.0, 5.0, 5.0]
 model.compile("adam", lr=0.001, metrics=["l2 relative error"])
 model.train(iterations=6000)
 
-# 2. stage: L-BFGS fine tunıng
+# 2. stage: L-BFGS fine tuning
 #model.compile("L-BFGS", loss_weights=loss_weights, metrics=["l2 relative error"])
 model.compile("L-BFGS", metrics=["l2 relative error"])
 losshistory, train_state = model.train()
@@ -88,7 +88,7 @@ ax1.set_title("Transverse displacement $w(x)$")
 ax1.grid(True, linestyle=":", alpha=0.6)
 ax1.legend()
 
-ax2.plot(x_test, y_true[:, 1], "k--", label="Analytıcal (Exact)")
+ax2.plot(x_test, y_true[:, 1], "k--", label="Analytical (Exact)")
 ax2.plot(x_test, y_pred[:, 1], "b-", label="PINN prediction")
 ax2.set_title(r"Section rotation $\varphi(x)$")
 ax2.grid(True, linestyle=":", alpha=0.6)
